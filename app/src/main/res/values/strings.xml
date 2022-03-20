@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Sınav1</string>
+    <string name="products">\Ürünler</string>
+    <string name="login_text">Giriş</string>
+    <string name="phone_num_text">Telefon Numarası</string>
+    <string name="phone_num_hint">Cep Telefonu</string>
+    <string name="password">Şifre</string>
+    <string name="login_in">Giriş Yap</string>
+    <string name="not_login_in">Üye olmadan devam et</string>
+    <string name="product_details">\Ürün Detayları</string>
+    <string name="product_name">Marka\nÜrün Adı</string>
+    <string name="samp_price">₺11,90</string>
+    <string name="description_product">Ürüne dair detay açıklama</string>
+    <string name="water">Su</string>
+    <string name="soda">Gazlı içecek</string>
+    <string name="mineral_water">Maden suyu</string>
+    <string name="juice">Meyve suyu</string>
+    <string name="ayran">Ayran</string>
+
+
+
+
+
+</resources>
