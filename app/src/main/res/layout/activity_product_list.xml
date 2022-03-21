@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ProductListActivity">
 
+    <TextView
+        android:id="@+id/tvBagPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/samp_price"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/btnBag"
+        app:layout_constraintStart_toStartOf="@+id/btnBag"
+        app:layout_constraintTop_toBottomOf="@+id/btnBag"
+        app:layout_constraintVertical_bias="0.0" />
+
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"

@@ -79,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="16dp"
+        android:text="@string/samp_price"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/btnBag_D"
         app:layout_constraintStart_toStartOf="@+id/btnBag_D"
