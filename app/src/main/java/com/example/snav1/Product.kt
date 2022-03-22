@@ -1,11 +1,15 @@
 package com.example.snav1
 
 import android.media.Image
+import android.widget.ImageView
 import java.io.Serializable
 
-class Product :Serializable{
-    var Id:Int=0
-    var Name:String?=null
-    var Price:Double=0.0
-    var Type:String?=null
+class Product(var id:Int=0,
+              var name:String?=null,
+              var price:Double=0.0,
+              var type:String?=null,
+              var img:Int,
+              var description:String?= "Ürüne detaylı açıklaması",
+              var total_price:Double?=0.0) :Serializable{
+
 }

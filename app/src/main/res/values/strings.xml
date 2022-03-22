@@ -11,11 +11,15 @@
     <string name="product_name">Marka\nÜrün Adı</string>
     <string name="samp_price">₺11,90</string>
     <string name="description_product">Ürüne dair detay açıklama</string>
+
+    <string name="all_drinks">Tüm İçecekler</string>
     <string name="water">Su</string>
     <string name="soda">Gazlı içecek</string>
     <string name="mineral_water">Maden suyu</string>
     <string name="juice">Meyve suyu</string>
     <string name="ayran">Ayran/Kefir</string>
+    <string name="coffee">Kahve</string>
+
 
 
 

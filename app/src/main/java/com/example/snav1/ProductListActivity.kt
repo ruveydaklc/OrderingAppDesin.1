@@ -1,22 +1,21 @@
 package com.example.snav1
 
+import android.app.Instrumentation
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.snav1.categry.CategoryAdapter
 import com.example.snav1.databinding.ActivityProductListBinding
-import com.example.snav1.products.ProductListViewHolder
 import com.example.snav1.products.ProductsAdapter
-import kotlinx.android.synthetic.main.category_card_design.*
-import kotlinx.android.synthetic.main.product_card_design.*
+import kotlinx.android.synthetic.main.activity_product_list.*
 
 class ProductListActivity : AppCompatActivity() {
 
@@ -25,10 +24,16 @@ class ProductListActivity : AppCompatActivity() {
     lateinit var binding: ActivityProductListBinding
     var productList=ArrayList<Product>()
 
-    lateinit var categoryList:ArrayList<String>
     lateinit var userType:String
     var totalPrice:Double = 0.0
-    lateinit var productType:String
+
+    var selectedFilter:String="all"
+
+    var white :Int =0
+    var lightGreen:Int = 0
+    var allButton=ArrayList<Button>()
+
+    var cardProductsList=ArrayList<Product>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,85 +47,149 @@ class ProductListActivity : AppCompatActivity() {
         WindowInsetsControllerCompat(window,window.decorView).isAppearanceLightStatusBars = true
 
         userType= intent.getSerializableExtra("user_type").toString()
-
-        categoryList= arrayListOf("su","soda","madensuyu","meyvesuyu","ayran")
-
-        var product:Product
-
-
-        var p1:Product= Product()
-        var p3:Product=Product()
-        var p2:Product=Product()
-
-        p1.Id=1;p1.Name="1111";p1.Price=11.11;p1.Type="11"
-        p2.Id=2;p2.Name="2222";p2.Price=22.11;p2.Type="22"
-        p3.Id=3;p3.Name="3333";p3.Price=33.11;p3.Type="33"
-
-        productList.add(p1);productList.add(p2);productList.add(p3)
-
         binding.btnBack.setOnClickListener {
             setResult(RESULT_CANCELED)
             finish()
         }
-
-
         if (userType=="guest"){
             binding.btnBag.isVisible=false
             binding.tvBagPrice.isVisible=false
         }
 
-        val lmCategory = LinearLayoutManager(this)
-        lmCategory.orientation=LinearLayoutManager.HORIZONTAL
-        binding.rvCategorys.layoutManager=lmCategory
-        binding.rvCategorys.adapter=CategoryAdapter(this,categoryList,::categoryClick)
+        addingProductList()
+        showAllData(productList)
+        initColors()
+        addingButtons()
 
 
-        val lmProducts=LinearLayoutManager(this)
+
+        for (i in cardProductsList){
+            totalPrice+=i.price
+        }
+
+        binding.tvBagPrice.text="₺"+totalPrice
+
+
+
+
+        binding.btnAyran.setOnClickListener { ayranTapp(binding.btnAyran) }
+        binding.btnCoffee.setOnClickListener { coffeeTapp(binding.btnCoffee) }
+        binding.btnJuice.setOnClickListener { juiceTapp(binding.btnJuice) }
+        binding.btnMinWater.setOnClickListener { minWaterTapp(binding.btnMinWater) }
+        binding.btnSoda.setOnClickListener { sodaTapp(binding.btnSoda) }
+        binding.btnWater.setOnClickListener { waterTapp(binding.btnWater) }
+
+
+
+    }
+
+
+
+    private fun filterList(category:String){
+
+        selectedFilter=category
+        var categoryFilterList=ArrayList<Product>()
+        for (item in productList){
+            if (item.type == category){
+                categoryFilterList.add(item)
+                val lmProducts = GridLayoutManager(this,2)
+                lmProducts.orientation=LinearLayoutManager.VERTICAL
+                binding.rvProducts.layoutManager=lmProducts
+                binding.rvProducts.adapter = ProductsAdapter(this,userType,categoryFilterList,cardProductsList,::itemClick)
+
+            }
+
+        }
+
+    }
+    fun addingProductList(){
+
+        val p1:Product= Product(1,"Damla Su",11.99,"water",R.mipmap.damla_su_foreground,"İçecek Kategorisi Su")
+        val p3:Product=Product(2,"Sütaş Ayran",11.99,"ayran",R.mipmap.sutas_ayran_foreground,"İçecek Kategorisi Ayran")
+        val p2:Product=Product(3,"Cappy Meyve Suyu",11.99,"juice",R.mipmap.cappy_meyvesuyu_foreground)
+        val p4:Product= Product(4,"Erikli Su",11.99,"water",R.mipmap.erikli_su_foreground)
+        val p5:Product= Product(5,"Saka Su",11.99,"water",R.mipmap.saka_su_foreground)
+        val p6:Product= Product(6,"Neskafe Kahve",11.99,"coffee",R.mipmap.neskafe_kahve_foreground,"Nescafe Xpress Karamel Aromalı Kahveli Sütlü İçecek 250 ml")
+        val p7:Product= Product(7,"Perrier Madensuyu",11.99,"minWater",R.mipmap.perrier_madensuyu_foreground,"Perrier Maden Suyu 33 Cl")
+        val p8:Product= Product(8,"Schweppes",11.99,"soda",R.mipmap.schweppes_soda_foreground,"Schweppes Mandalina Aromalı Gazlı İçecek Cam 250 Ml")
+
+        productList.add(p1);productList.add(p2);productList.add(p3);productList.add(p4);productList.add(p5)
+        productList.add(p6);productList.add(p7);productList.add(p8)
+
+    }
+    fun showAllData(product_list:ArrayList<Product>){
+        val lmProducts = GridLayoutManager(this,2)
         lmProducts.orientation=LinearLayoutManager.VERTICAL
         binding.rvProducts.layoutManager=lmProducts
-        binding.rvProducts.adapter = ProductsAdapter(this,userType,productList,::itemClick ,totalPrice)
-
-
-
-
-        binding.tvBagPrice.text=totalPrice.toString()
-
-
-
-
-
+        binding.rvProducts.adapter = ProductsAdapter(this,userType,product_list,cardProductsList,::itemClick)
     }
 
-    fun itemClick(position: Int,userType:String){
-        val intent=Intent(this,ProductDetailActivity::class.java)
+
+
+    private fun categorySelected(parsedButton:Button){
+        parsedButton.setTextColor(white)
+        parsedButton.setBackgroundColor(lightGreen)
+    }
+    private fun categoryUnSelected(parsedButtons:ArrayList<Button>){
+        for (button in parsedButtons){
+            button.setTextColor(lightGreen)
+            button.setBackgroundColor(white)
+        }
+    }
+    private fun unSelectedAllFilterButtons(btn:Button){
+        var newButtonList=ArrayList<Button>()
+        newButtonList.addAll(allButton)
+        categorySelected(btn)
+        for (button in allButton){
+            if (btn==button){
+                newButtonList.remove(button)
+                categoryUnSelected(newButtonList)
+            }
+        }
+    }
+
+
+    fun waterTapp(btn:Button){ filterList("water") ;unSelectedAllFilterButtons(btn)}
+    fun sodaTapp(btn:Button){ filterList("soda");unSelectedAllFilterButtons(btn)}
+    fun minWaterTapp(btn:Button){ filterList("minWater");unSelectedAllFilterButtons(btn) }
+    fun ayranTapp(btn:Button){ filterList("ayran");unSelectedAllFilterButtons(btn) }
+    fun juiceTapp(btn:Button){ filterList("juice");unSelectedAllFilterButtons(btn)}
+    fun coffeeTapp(btn:Button){ filterList("coffee");unSelectedAllFilterButtons(btn)}
+
+
+    fun addingButtons(){
+        allButton.add(binding.btnAyran)
+        allButton.add(binding.btnCoffee)
+        allButton.add(binding.btnJuice)
+        allButton.add(binding.btnMinWater)
+        allButton.add(binding.btnSoda)
+        allButton.add(binding.btnWater)
+    }
+    fun initColors(){
+        white=ContextCompat.getColor(applicationContext,R.color.white)
+        lightGreen=ContextCompat.getColor(applicationContext,R.color.light_green)
+    }
+
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ::reResult )
+
+    fun reResult(result: ActivityResult){
+        if (result.resultCode== RESULT_OK){
+            val p =result.data!!.getSerializableExtra("item") as Product
+            cardProductsList.add(p)
+
+        }
+        binding.rvProducts.adapter!!.notifyDataSetChanged()
+    }
+
+    fun itemClick(position : Int)
+    {
+        val intent= Intent(this, ProductDetailActivity::class.java)
         intent.putExtra("item",productList.get(position))
         intent.putExtra("user_type",userType)
+        intent.putExtra("total",totalPrice)
         resultLauncher.launch(intent)
     }
-
-    fun categoryClick(position: Int){
-
-        btnCategorys.setBackgroundResource(R.color.light_green)
-        btnCategorys.setTextColor(Color.WHITE)
-
-
-
-    }
-
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        result->
-        if (result.resultCode== RESULT_CANCELED)
-        {
-            Toast.makeText(this,"İşlemi iptal Ettiniz",Toast.LENGTH_SHORT).show()
-        }
-        else if (result.resultCode== RESULT_OK){
-            Toast.makeText(this,"Ürün Ekleme Başarılı",Toast.LENGTH_LONG).show()
-            var item=result.data!!.getSerializableExtra("item") as Product
-            //totalPrice+= item.Price
-        }
-
-    }
-
 
 
 

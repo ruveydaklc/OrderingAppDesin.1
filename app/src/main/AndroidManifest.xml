@@ -17,12 +17,7 @@
         <activity
             android:name=".ProductDetailActivity"
             android:exported="false" />
-        <activity
-            android:name=".UrunDetayActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UrunListeActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
