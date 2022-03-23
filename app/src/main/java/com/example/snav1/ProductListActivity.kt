@@ -36,18 +36,6 @@ class ProductListActivity : AppCompatActivity() {
     var lightGreen:Int = 0
     var allButton=ArrayList<Button>()
 
-    private val textWatcher =object :TextWatcher{
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
-
-        override fun afterTextChanged(p0: Editable?) {
-            setTotalPrice(totalPrice)
-        }
-
-    }
 
 
     //val productsLiveData = MutableLiveData<List<Product>>()
@@ -192,7 +180,7 @@ class ProductListActivity : AppCompatActivity() {
         for (i in cardTotal){
             this.totalPrice +=i
         }
-        binding.tvBagPrice.addTextChangedListener(textWatcher)
+        binding.tvBagPrice.text="₺"+ totalPrice
 
     }
 
@@ -214,10 +202,10 @@ class ProductListActivity : AppCompatActivity() {
         //binding.rvProducts.adapter!!.notifyDataSetChanged()
     }
 
-    fun itemClick(position : Int)
+    fun itemClick(position : Int,list:ArrayList<Product>)
     {
         val intent= Intent(this, ProductDetailActivity::class.java)
-        intent.putExtra("item",productList.get(position))
+        intent.putExtra("item",list.get(position))
         intent.putExtra("user_type",userType)
         intent.putExtra("total",totalPrice)
         resultLauncher.launch(intent)

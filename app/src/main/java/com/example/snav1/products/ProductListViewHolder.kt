@@ -16,7 +16,7 @@ import com.example.snav1.card.cardTotal
 import kotlin.reflect.KFunction1
 
 
-class ProductListViewHolder(itemView:View,userType:String, itemClick : (position : Int)->Unit): RecyclerView.ViewHolder(itemView)
+class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Product>, itemClick : (position : Int,list:ArrayList<Product>)->Unit): RecyclerView.ViewHolder(itemView)
 {
     var ivItemImage:ImageView
     var btnAdd:ImageButton
@@ -34,7 +34,7 @@ class ProductListViewHolder(itemView:View,userType:String, itemClick : (position
         btnAdd=itemView.findViewById(R.id.btnAdd_C)
         cardView=itemView.findViewById(R.id.card_product_design)
 
-        itemView.setOnClickListener { itemClick(adapterPosition) }
+        itemView.setOnClickListener { itemClick(adapterPosition,pList) }
 
 
     }

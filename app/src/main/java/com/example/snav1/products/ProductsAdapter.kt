@@ -10,13 +10,13 @@ import com.example.snav1.R
 class ProductsAdapter(
     val context: Context, var userType:String
     , var pList:ArrayList<Product>
-    , val itemClick : (position : Int)->Unit) : RecyclerView.Adapter<ProductListViewHolder> (){
+    , val itemClick : (position : Int,list:ArrayList<Product>)->Unit) : RecyclerView.Adapter<ProductListViewHolder> (){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListViewHolder {
 
         val v =LayoutInflater.from(context).inflate(R.layout.product_card_design,parent,false)
-        return ProductListViewHolder(v,userType,itemClick)
+        return ProductListViewHolder(v,userType,pList,itemClick)
     }
 
     override fun onBindViewHolder(holder: ProductListViewHolder, position: Int) {
