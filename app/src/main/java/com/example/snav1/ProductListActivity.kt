@@ -196,14 +196,14 @@ open class ProductListActivity : AppCompatActivity() {
     //product data
     fun addingProductList(){
 
-        val p1:Product= Product(1,"Damla Su",11.99f,"water",R.mipmap.damla_su_foreground,"Damla Su Pet 1 L")
+        val p1:Product= Product(1,"Damla Su",10.99f,"water",R.mipmap.damla_su_foreground,"Damla Su Pet 1 L")
         val p3:Product=Product(2,"Sütaş Ayran",11.99f,"ayran",R.mipmap.sutas_ayran_foreground,"İçecek Kategorisi Ayran")
-        val p2:Product=Product(3,"Cappy Meyve Suyu",11.99f,"juice",R.mipmap.cappy_meyvesuyu_foreground)
-        val p4:Product= Product(4,"Erikli Su",11.99f,"water",R.mipmap.erikli_su_foreground)
-        val p5:Product= Product(5,"Saka Su",11.99f,"water",R.mipmap.saka_su_foreground)
-        val p6:Product= Product(6,"Neskafe Kahve",11.99f,"coffee",R.mipmap.neskafe_kahve_foreground,"Nescafe Xpress Karamel Aromalı Kahveli Sütlü İçecek 250 ml")
-        val p7:Product= Product(7,"Perrier Madensuyu",11.99f,"minWater",R.mipmap.perrier_madensuyu_foreground,"Perrier Maden Suyu 33 Cl")
-        val p8:Product= Product(8,"Schweppes",11.99f,"soda",R.mipmap.schweppes_soda_foreground,"Schweppes Mandalina Aromalı Gazlı İçecek Cam 250 Ml")
+        val p2:Product=Product(3,"Cappy Meyve Suyu",12.99f,"juice",R.mipmap.cappy_meyvesuyu_foreground)
+        val p4:Product= Product(4,"Erikli Su",13.99f,"water",R.mipmap.erikli_su_foreground)
+        val p5:Product= Product(5,"Saka Su",14.99f,"water",R.mipmap.saka_su_foreground)
+        val p6:Product= Product(6,"Neskafe Kahve",15.99f,"coffee",R.mipmap.neskafe_kahve_foreground,"Nescafe Xpress Karamel Aromalı Kahveli Sütlü İçecek 250 ml")
+        val p7:Product= Product(7,"Perrier Madensuyu",16.99f,"minWater",R.mipmap.perrier_madensuyu_foreground,"Perrier Maden Suyu 33 Cl")
+        val p8:Product= Product(8,"Schweppes",17.99f,"soda",R.mipmap.schweppes_soda_foreground,"Schweppes Mandalina Aromalı Gazlı İçecek Cam 250 Ml")
 
         productList.add(p1);productList.add(p2);productList.add(p3);productList.add(p4);productList.add(p5)
         productList.add(p6);productList.add(p7);productList.add(p8)
