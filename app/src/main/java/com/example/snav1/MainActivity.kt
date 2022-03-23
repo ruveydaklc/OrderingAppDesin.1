@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     { result ->
         if (result.resultCode== RESULT_CANCELED)
         {
-            Toast.makeText(this, "Giriş Sayfasına Döndünüz", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Giriş Sayfasına Döndünüz.Sepetinizde ürün varsa silinmiştir.", Toast.LENGTH_SHORT).show()
             cardTotal.clear()
 
         }

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.snav1.Product
 import com.example.snav1.R
 import com.example.snav1.card.cardTotal
-import kotlin.reflect.KFunction1
 
 
 class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Product>, itemClick : (position : Int,list:ArrayList<Product>)->Unit): RecyclerView.ViewHolder(itemView)
@@ -23,7 +22,6 @@ class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Produc
     var tvName:TextView
     var tvPrice:TextView
     var cardView:CardView
-    lateinit var aaa:ProductsAdapter
 
 
 
@@ -42,8 +40,7 @@ class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Produc
 
     fun bindData(
         context: Context,
-        item: Product,
-    ){
+        item: Product){
 
         //Bag and price visibility
         if (user_Type == "guest"){
@@ -57,9 +54,9 @@ class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Produc
         ivItemImage.setImageBitmap(image)
 
         btnAdd.setOnClickListener {
+            cardTotal.add(item.price)
 
             Toast.makeText(context,"${tvName.text} ürününü sepetinize eklediniz",Toast.LENGTH_SHORT).show()
-            cardTotal.add(item.price)
         }
 
         /*cardView.setOnClickListener {

@@ -33,7 +33,7 @@ class ProductDetailActivity : AppCompatActivity() {
 
         product= intent.getSerializableExtra("item") as Product
         userType = intent.getStringExtra("user_type").toString()
-        var totalPrice = intent.getDoubleExtra("total",0.0)
+        var totalPrice = intent.getFloatExtra("total",0.0f)
 
 
 
@@ -59,6 +59,7 @@ class ProductDetailActivity : AppCompatActivity() {
         binding.btnAddD.setOnClickListener {
             val intent= Intent()
             intent.putExtra("itemD",product)
+            //cardTotal.add(product.price)
             setResult(RESULT_OK,intent)
             finish()
         }

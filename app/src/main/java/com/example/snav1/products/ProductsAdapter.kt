@@ -11,7 +11,7 @@ import com.example.snav1.card.cardTotal
 class ProductsAdapter(
     val context: Context, var userType:String
     , var pList:ArrayList<Product>
-    , val itemClick : (position : Int,list:ArrayList<Product>)->Unit) : RecyclerView.Adapter<ProductListViewHolder> (){
+    , val itemClick : (position : Int,list:ArrayList<Product>)->Unit): RecyclerView.Adapter<ProductListViewHolder> (){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListViewHolder {
@@ -25,6 +25,7 @@ class ProductsAdapter(
     }
 
     override fun getItemCount(): Int { return pList.size }
+
 
 
 

@@ -4,8 +4,6 @@ import android.app.Instrumentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -13,15 +11,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.snav1.card.cardTotal
 import com.example.snav1.databinding.ActivityProductListBinding
 import com.example.snav1.products.ProductsAdapter
 
-class ProductListActivity : AppCompatActivity() {
+open class ProductListActivity : AppCompatActivity() {
 
     //product list screen
 
@@ -29,7 +25,7 @@ class ProductListActivity : AppCompatActivity() {
     var productList=ArrayList<Product>()
 
     lateinit var userType:String
-    private var totalPrice:Double =0.0
+    var totalPrice:Float = 0.0f
     var selectedFilter:String="all"
 
     var white :Int =0
@@ -39,7 +35,6 @@ class ProductListActivity : AppCompatActivity() {
 
 
     //val productsLiveData = MutableLiveData<List<Product>>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,11 +77,9 @@ class ProductListActivity : AppCompatActivity() {
         binding.btnWater.setOnClickListener { waterTapp(binding.btnWater) }
 
 
-        setTotalPrice(totalPrice)
-
+        setTotalPrice()
 
     }
-
 
     //category filter
     private fun filterList(category:String){
@@ -97,35 +90,13 @@ class ProductListActivity : AppCompatActivity() {
             if (item.type == category){
                 categoryFilterList.add(item)
                 binding.rvProducts.adapter = ProductsAdapter(this,userType,categoryFilterList,::itemClick)
-
             }
-
         }
-
-    }
-
-    //product data
-    fun addingProductList(){
-
-        val p1:Product= Product(1,"Damla Su",11.99,"water",R.mipmap.damla_su_foreground,"Damla Su Pet 1 L")
-        val p3:Product=Product(2,"Sütaş Ayran",11.99,"ayran",R.mipmap.sutas_ayran_foreground,"İçecek Kategorisi Ayran")
-        val p2:Product=Product(3,"Cappy Meyve Suyu",11.99,"juice",R.mipmap.cappy_meyvesuyu_foreground)
-        val p4:Product= Product(4,"Erikli Su",11.99,"water",R.mipmap.erikli_su_foreground)
-        val p5:Product= Product(5,"Saka Su",11.99,"water",R.mipmap.saka_su_foreground)
-        val p6:Product= Product(6,"Neskafe Kahve",11.99,"coffee",R.mipmap.neskafe_kahve_foreground,"Nescafe Xpress Karamel Aromalı Kahveli Sütlü İçecek 250 ml")
-        val p7:Product= Product(7,"Perrier Madensuyu",11.99,"minWater",R.mipmap.perrier_madensuyu_foreground,"Perrier Maden Suyu 33 Cl")
-        val p8:Product= Product(8,"Schweppes",11.99,"soda",R.mipmap.schweppes_soda_foreground,"Schweppes Mandalina Aromalı Gazlı İçecek Cam 250 Ml")
-
-        productList.add(p1);productList.add(p2);productList.add(p3);productList.add(p4);productList.add(p5)
-        productList.add(p6);productList.add(p7);productList.add(p8)
-
     }
     fun showAllData(product_list:ArrayList<Product>){
+        setTotalPrice()
         binding.rvProducts.adapter = ProductsAdapter(this,userType,product_list,::itemClick)
     }
-
-
-
 
     //button clicked
     private fun categorySelected(parsedButton:Button){
@@ -173,15 +144,12 @@ class ProductListActivity : AppCompatActivity() {
     }
 
 
-
-    fun setTotalPrice(total_Price:Double ){
-
-        totalPrice=total_Price
+    private fun setTotalPrice( ){
         for (i in cardTotal){
-            this.totalPrice +=i
+            totalPrice = totalPrice + i
         }
+        Toast.makeText(this,"${totalPrice}",Toast.LENGTH_LONG).show()
         binding.tvBagPrice.text="₺"+ totalPrice
-
     }
 
 
@@ -192,12 +160,15 @@ class ProductListActivity : AppCompatActivity() {
             val p =result.data!!.getSerializableExtra("itemD") as Product
             cardTotal.add(p.price)
             Toast.makeText(this,"Sepetinize ${p.name} ürününü eklediniz",Toast.LENGTH_SHORT).show()
-            totalPrice+= p.price
-            binding.tvBagPrice.text="₺"+ totalPrice
+            //totalPrice+= p.price
+            //binding.tvBagPrice.text="₺"+ totalPrice
+
+            setTotalPrice()
         }
 
         if (result.resultCode== RESULT_CANCELED){
             binding.tvBagPrice.text="₺"+ totalPrice
+
         }
         //binding.rvProducts.adapter!!.notifyDataSetChanged()
     }
@@ -211,6 +182,22 @@ class ProductListActivity : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
+    //product data
+    fun addingProductList(){
+
+        val p1:Product= Product(1,"Damla Su",11.99f,"water",R.mipmap.damla_su_foreground,"Damla Su Pet 1 L")
+        val p3:Product=Product(2,"Sütaş Ayran",11.99f,"ayran",R.mipmap.sutas_ayran_foreground,"İçecek Kategorisi Ayran")
+        val p2:Product=Product(3,"Cappy Meyve Suyu",11.99f,"juice",R.mipmap.cappy_meyvesuyu_foreground)
+        val p4:Product= Product(4,"Erikli Su",11.99f,"water",R.mipmap.erikli_su_foreground)
+        val p5:Product= Product(5,"Saka Su",11.99f,"water",R.mipmap.saka_su_foreground)
+        val p6:Product= Product(6,"Neskafe Kahve",11.99f,"coffee",R.mipmap.neskafe_kahve_foreground,"Nescafe Xpress Karamel Aromalı Kahveli Sütlü İçecek 250 ml")
+        val p7:Product= Product(7,"Perrier Madensuyu",11.99f,"minWater",R.mipmap.perrier_madensuyu_foreground,"Perrier Maden Suyu 33 Cl")
+        val p8:Product= Product(8,"Schweppes",11.99f,"soda",R.mipmap.schweppes_soda_foreground,"Schweppes Mandalina Aromalı Gazlı İçecek Cam 250 Ml")
+
+        productList.add(p1);productList.add(p2);productList.add(p3);productList.add(p4);productList.add(p5)
+        productList.add(p6);productList.add(p7);productList.add(p8)
+
+    }
 
 
 
