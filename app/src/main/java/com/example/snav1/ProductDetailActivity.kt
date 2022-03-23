@@ -18,6 +18,8 @@ class ProductDetailActivity : AppCompatActivity() {
     lateinit var product:Product
     lateinit var userType:String
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,17 +33,12 @@ class ProductDetailActivity : AppCompatActivity() {
 
         product= intent.getSerializableExtra("item") as Product
         userType = intent.getStringExtra("user_type").toString()
-        var totalPrice=intent.getDoubleExtra("total",0.0)
+        var totalPrice = intent.getDoubleExtra("total",0.0)
 
-
-        for (i in cardTotal){
-            totalPrice+=i
-            binding.tvBagPriceD.text="₺"+ totalPrice
-
-        }
 
 
         binding.btnBackD.setOnClickListener {
+            setResult(RESULT_CANCELED)
             finish()
         }
 

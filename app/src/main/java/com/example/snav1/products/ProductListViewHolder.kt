@@ -36,6 +36,7 @@ class ProductListViewHolder(itemView:View,userType:String, itemClick : (position
 
         itemView.setOnClickListener { itemClick(adapterPosition) }
 
+
     }
 
     fun bindData(
@@ -56,11 +57,9 @@ class ProductListViewHolder(itemView:View,userType:String, itemClick : (position
 
         btnAdd.setOnClickListener {
             cardTotal.add(item.price)
-
             Toast.makeText(context,"${tvName.text} ürününü sepetinize eklediniz",Toast.LENGTH_SHORT).show()
-
-
         }
+
         /*cardView.setOnClickListener {
             val intent= Intent(context, ProductDetailActivity::class.java)
             intent.putExtra("item",item)

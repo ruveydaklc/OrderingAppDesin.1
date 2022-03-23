@@ -4,6 +4,8 @@ import android.app.Instrumentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -27,15 +29,28 @@ class ProductListActivity : AppCompatActivity() {
     var productList=ArrayList<Product>()
 
     lateinit var userType:String
-    var totalPrice:Double =0.0
+    private var totalPrice:Double =0.0
     var selectedFilter:String="all"
 
     var white :Int =0
     var lightGreen:Int = 0
     var allButton=ArrayList<Button>()
 
+    private val textWatcher =object :TextWatcher{
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
 
-    val productsLiveData = MutableLiveData<List<Product>>()
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+            setTotalPrice(totalPrice)
+        }
+
+    }
+
+
+    //val productsLiveData = MutableLiveData<List<Product>>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +70,7 @@ class ProductListActivity : AppCompatActivity() {
         initColors()
         addingButtons()
 
+
         binding.btnBack.setOnClickListener {
             setResult(RESULT_CANCELED)
             finish()
@@ -70,8 +86,6 @@ class ProductListActivity : AppCompatActivity() {
         showAllData(productList)
 
 
-
-
         binding.btnAyran.setOnClickListener { ayranTapp(binding.btnAyran) }
         binding.btnCoffee.setOnClickListener { coffeeTapp(binding.btnCoffee) }
         binding.btnJuice.setOnClickListener { juiceTapp(binding.btnJuice) }
@@ -79,12 +93,9 @@ class ProductListActivity : AppCompatActivity() {
         binding.btnSoda.setOnClickListener { sodaTapp(binding.btnSoda) }
         binding.btnWater.setOnClickListener { waterTapp(binding.btnWater) }
 
-        binding.tvBagPrice.text="₺"+ totalPrice
 
+        setTotalPrice(totalPrice)
 
-        for (i in cardTotal){
-            totalPrice+=i
-        }
 
     }
 
@@ -124,7 +135,6 @@ class ProductListActivity : AppCompatActivity() {
     fun showAllData(product_list:ArrayList<Product>){
         binding.rvProducts.adapter = ProductsAdapter(this,userType,product_list,::itemClick)
     }
-
 
 
 
@@ -176,16 +186,32 @@ class ProductListActivity : AppCompatActivity() {
 
 
 
+    fun setTotalPrice(total_Price:Double ){
+
+        totalPrice=0.0
+        for (i in cardTotal){
+            this.totalPrice +=i
+        }
+        binding.tvBagPrice.addTextChangedListener(textWatcher)
+
+    }
+
+
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ::reResult )
 
     fun reResult(result: ActivityResult){
         if (result.resultCode== RESULT_OK){
             val p =result.data!!.getSerializableExtra("itemD") as Product
-
             cardTotal.add(p.price)
             Toast.makeText(this,"Sepetinize ${p.name} ürününü eklediniz",Toast.LENGTH_SHORT).show()
+            totalPrice+= p.price
+            binding.tvBagPrice.text="₺"+ totalPrice
         }
-        binding.rvProducts.adapter!!.notifyDataSetChanged()
+
+        if (result.resultCode== RESULT_CANCELED){
+            binding.tvBagPrice.text="₺"+ totalPrice
+        }
+        //binding.rvProducts.adapter!!.notifyDataSetChanged()
     }
 
     fun itemClick(position : Int)
@@ -196,6 +222,7 @@ class ProductListActivity : AppCompatActivity() {
         intent.putExtra("total",totalPrice)
         resultLauncher.launch(intent)
     }
+
 
 
 

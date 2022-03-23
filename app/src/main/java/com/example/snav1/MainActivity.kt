@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import com.example.snav1.card.cardTotal
 import com.example.snav1.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -72,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         if (result.resultCode== RESULT_CANCELED)
         {
             Toast.makeText(this, "Giriş Sayfasına Döndünüz", Toast.LENGTH_SHORT).show()
+            cardTotal.clear()
+
         }
 
     }
