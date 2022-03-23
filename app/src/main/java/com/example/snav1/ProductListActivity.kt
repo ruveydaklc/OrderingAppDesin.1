@@ -107,7 +107,7 @@ class ProductListActivity : AppCompatActivity() {
     //product data
     fun addingProductList(){
 
-        val p1:Product= Product(1,"Damla Su",11.99,"water",R.mipmap.damla_su_foreground,"İçecek Kategorisi Su")
+        val p1:Product= Product(1,"Damla Su",11.99,"water",R.mipmap.damla_su_foreground,"Damla Su Pet 1 L")
         val p3:Product=Product(2,"Sütaş Ayran",11.99,"ayran",R.mipmap.sutas_ayran_foreground,"İçecek Kategorisi Ayran")
         val p2:Product=Product(3,"Cappy Meyve Suyu",11.99,"juice",R.mipmap.cappy_meyvesuyu_foreground)
         val p4:Product= Product(4,"Erikli Su",11.99,"water",R.mipmap.erikli_su_foreground)
@@ -176,7 +176,7 @@ class ProductListActivity : AppCompatActivity() {
 
     fun setTotalPrice(total_Price:Double ){
 
-        totalPrice=0.0
+        totalPrice=total_Price
         for (i in cardTotal){
             this.totalPrice +=i
         }

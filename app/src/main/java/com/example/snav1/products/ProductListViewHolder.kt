@@ -23,6 +23,7 @@ class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Produc
     var tvName:TextView
     var tvPrice:TextView
     var cardView:CardView
+    lateinit var aaa:ProductsAdapter
 
 
 
@@ -56,8 +57,9 @@ class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Produc
         ivItemImage.setImageBitmap(image)
 
         btnAdd.setOnClickListener {
-            cardTotal.add(item.price)
+
             Toast.makeText(context,"${tvName.text} ürününü sepetinize eklediniz",Toast.LENGTH_SHORT).show()
+            cardTotal.add(item.price)
         }
 
         /*cardView.setOnClickListener {

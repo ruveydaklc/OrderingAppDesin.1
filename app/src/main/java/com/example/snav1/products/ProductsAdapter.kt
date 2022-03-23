@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snav1.Product
 import com.example.snav1.R
+import com.example.snav1.card.cardTotal
 
 class ProductsAdapter(
     val context: Context, var userType:String
@@ -24,7 +25,6 @@ class ProductsAdapter(
     }
 
     override fun getItemCount(): Int { return pList.size }
-
 
 
 
