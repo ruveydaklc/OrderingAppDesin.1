@@ -10,7 +10,6 @@ import com.example.snav1.R
 class ProductsAdapter(
     val context: Context, var userType:String
     , var pList:ArrayList<Product>
-    , var cList:ArrayList<Product>
     , val itemClick : (position : Int)->Unit) : RecyclerView.Adapter<ProductListViewHolder> (){
 
 
@@ -21,14 +20,11 @@ class ProductsAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductListViewHolder, position: Int) {
-
-        holder.bindData(context,pList.get(position),cList)
+        holder.bindData(context,pList.get(position))
     }
 
-    override fun getItemCount(): Int {
-        return pList.size
+    override fun getItemCount(): Int { return pList.size }
 
-    }
 
 
 

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
+import com.example.snav1.card.cardTotal
 import com.example.snav1.databinding.ActivityProductDetailBinding
 
 class ProductDetailActivity : AppCompatActivity() {
@@ -16,7 +17,6 @@ class ProductDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityProductDetailBinding
     lateinit var product:Product
     lateinit var userType:String
-    var totalPrice:Double=0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +30,25 @@ class ProductDetailActivity : AppCompatActivity() {
 
 
         product= intent.getSerializableExtra("item") as Product
-        userType=intent.getStringExtra("user_type").toString()
-        //totalPrice=intent.getDoubleExtra("total")
+        userType = intent.getStringExtra("user_type").toString()
+        var totalPrice=intent.getDoubleExtra("total",0.0)
+
+
+        for (i in cardTotal){
+            totalPrice+=i
+            binding.tvBagPriceD.text="₺"+ totalPrice
+
+        }
 
 
         binding.btnBackD.setOnClickListener {
             finish()
+        }
+
+        if (userType == "guest"){
+            binding.btnBagD.isVisible=false
+            binding.tvBagPriceD.isVisible=false
+            binding.btnAddD.isVisible=false
         }
 
         binding.tvBagPriceD.text= "₺" + totalPrice
@@ -44,16 +57,11 @@ class ProductDetailActivity : AppCompatActivity() {
         binding.ivProductD.setImageResource(product.img)
         binding.tvProductDesc.text=product.description
 
-        if (userType=="guest"){
-            binding.btnAddD.isVisible=false
-            binding.tvBagPriceD.isVisible=false
-            binding.btnAddD.isVisible=false
-        }
+
 
         binding.btnAddD.setOnClickListener {
             val intent= Intent()
-            intent.putExtra("item",product)
-            Toast.makeText(this,"Sepetinize ${product.name} ürününü eklediniz",Toast.LENGTH_SHORT).show()
+            intent.putExtra("itemD",product)
             setResult(RESULT_OK,intent)
             finish()
         }

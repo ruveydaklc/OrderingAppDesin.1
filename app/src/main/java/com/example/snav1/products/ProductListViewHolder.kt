@@ -1,7 +1,6 @@
 package com.example.snav1.products
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.ImageButton
@@ -12,8 +11,9 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snav1.Product
-import com.example.snav1.ProductDetailActivity
 import com.example.snav1.R
+import com.example.snav1.card.cardTotal
+import kotlin.reflect.KFunction1
 
 
 class ProductListViewHolder(itemView:View,userType:String, itemClick : (position : Int)->Unit): RecyclerView.ViewHolder(itemView)
@@ -38,10 +38,13 @@ class ProductListViewHolder(itemView:View,userType:String, itemClick : (position
 
     }
 
-    fun bindData(context: Context,item:Product,cList:ArrayList<Product>){
+    fun bindData(
+        context: Context,
+        item: Product,
+    ){
 
         //Bag and price visibility
-        if (user_Type=="guest"){
+        if (user_Type == "guest"){
             btnAdd.isVisible=false
         }
 
@@ -52,8 +55,10 @@ class ProductListViewHolder(itemView:View,userType:String, itemClick : (position
         ivItemImage.setImageBitmap(image)
 
         btnAdd.setOnClickListener {
+            cardTotal.add(item.price)
+
             Toast.makeText(context,"${tvName.text} ürününü sepetinize eklediniz",Toast.LENGTH_SHORT).show()
-            cList.add(item)
+
 
         }
         /*cardView.setOnClickListener {
@@ -62,6 +67,9 @@ class ProductListViewHolder(itemView:View,userType:String, itemClick : (position
             intent.putExtra("user_type",user_Type)
             context.startActivity(intent)
         }*/
+
+
+
     }
 
 }
