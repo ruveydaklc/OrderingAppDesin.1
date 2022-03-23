@@ -136,6 +136,7 @@ open class ProductListActivity : AppCompatActivity() {
         for (i in cardTotal){
             totalPrice = totalPrice + i
         }
+        totalPrice = Math.round(totalPrice * 100.0f) / 100.00f
         binding.tvBagPrice.text="₺"+ totalPrice
     }
 
