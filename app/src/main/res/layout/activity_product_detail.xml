@@ -76,6 +76,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/box_shape"
         android:backgroundTint="@color/light_green"
+        android:gravity="center"
         android:text="@string/samp_price"
         android:textColor="@color/button_orange"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"

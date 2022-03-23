@@ -63,7 +63,7 @@ open class ProductListActivity : AppCompatActivity() {
             binding.tvBagPrice.isVisible=false
         }
 
-        val lmProducts = GridLayoutManager(this,2)
+        val lmProducts = GridLayoutManager(this,4)
         lmProducts.orientation=LinearLayoutManager.VERTICAL
         binding.rvProducts.layoutManager=lmProducts
 
@@ -196,9 +196,11 @@ open class ProductListActivity : AppCompatActivity() {
         val p6:Product= Product(6,"Neskafe Kahve",15.99f,"coffee",R.mipmap.neskafe_kahve_foreground,"Nescafe Xpress Karamel Aromalı Kahveli Sütlü İçecek 250 ml")
         val p7:Product= Product(7,"Perrier Madensuyu",16.99f,"minWater",R.mipmap.perrier_madensuyu_foreground,"Perrier Maden Suyu 33 Cl")
         val p8:Product= Product(8,"Schweppes",17.99f,"soda",R.mipmap.schweppes_soda_foreground,"Schweppes Mandalina Aromalı Gazlı İçecek Cam 250 Ml")
+        val p9:Product= Product(9,"Pınar Su",18.99f,"water",R.mipmap.pinar_su_foreground,"Pınar Su 1 L")
+
 
         productList.add(p1);productList.add(p2);productList.add(p3);productList.add(p4);productList.add(p5)
-        productList.add(p6);productList.add(p7);productList.add(p8)
+        productList.add(p6);productList.add(p7);productList.add(p8);productList.add(p9)
 
     }
 

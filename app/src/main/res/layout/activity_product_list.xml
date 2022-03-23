@@ -13,6 +13,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/box_shape"
         android:backgroundTint="@color/light_green"
+        android:gravity="center"
         android:paddingStart="3dp"
         android:paddingEnd="3dp"
         android:text="@string/samp_price"
