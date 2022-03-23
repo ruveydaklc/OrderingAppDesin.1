@@ -31,9 +31,7 @@ open class ProductListActivity : AppCompatActivity() {
     var white :Int =0
     var lightGreen:Int = 0
     var allButton=ArrayList<Button>()
-    var category:String="water"
-
-
+    var fCategory:String="water"
 
     //val productsLiveData = MutableLiveData<List<Product>>()
 
@@ -49,9 +47,7 @@ open class ProductListActivity : AppCompatActivity() {
 
         userType= intent.getStringExtra("user_type").toString()
 
-
         setTotalPrice()
-
         addingProductList()
         initColors()
         addingButtons()
@@ -61,6 +57,7 @@ open class ProductListActivity : AppCompatActivity() {
             setResult(RESULT_CANCELED)
             finish()
         }
+
         if (userType=="guest"){
             binding.btnBag.isVisible=false
             binding.tvBagPrice.isVisible=false
@@ -70,10 +67,9 @@ open class ProductListActivity : AppCompatActivity() {
         lmProducts.orientation=LinearLayoutManager.VERTICAL
         binding.rvProducts.layoutManager=lmProducts
 
-        //set water button first
-        filterList("water");unSelectedAllFilterButtons(binding.btnWater)
-        //showAllData(productList)
-
+        //set "water" button first
+        filterList(fCategory);unSelectedAllFilterButtons(binding.btnWater)
+        //showAllData(productList) //for set all product first
 
         binding.btnAyran.setOnClickListener { ayranTapp(binding.btnAyran) }
         binding.btnCoffee.setOnClickListener { coffeeTapp(binding.btnCoffee) }
@@ -81,8 +77,6 @@ open class ProductListActivity : AppCompatActivity() {
         binding.btnMinWater.setOnClickListener { minWaterTapp(binding.btnMinWater) }
         binding.btnSoda.setOnClickListener { sodaTapp(binding.btnSoda) }
         binding.btnWater.setOnClickListener { waterTapp(binding.btnWater) }
-
-
 
     }
 
@@ -99,6 +93,7 @@ open class ProductListActivity : AppCompatActivity() {
             }
         }
     }
+
     /*fun showAllData(product_list:ArrayList<Product>){
         setTotalPrice()
         binding.rvProducts.adapter = ProductsAdapter(this,userType,product_list,::itemClick,::addClick)
@@ -128,12 +123,52 @@ open class ProductListActivity : AppCompatActivity() {
     }
 
 
+    //button click functions
     fun waterTapp(btn:Button){ filterList("water") ;unSelectedAllFilterButtons(btn)}
     fun sodaTapp(btn:Button){ filterList("soda");unSelectedAllFilterButtons(btn)}
     fun minWaterTapp(btn:Button){ filterList("minWater");unSelectedAllFilterButtons(btn) }
     fun ayranTapp(btn:Button){ filterList("ayran");unSelectedAllFilterButtons(btn) }
     fun juiceTapp(btn:Button){ filterList("juice");unSelectedAllFilterButtons(btn)}
     fun coffeeTapp(btn:Button){ filterList("coffee");unSelectedAllFilterButtons(btn)}
+
+    private fun setTotalPrice( ){
+        totalPrice=0.00f
+        for (i in cardTotal){
+            totalPrice = totalPrice + i
+        }
+        binding.tvBagPrice.text="₺"+ totalPrice
+    }
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ::reResult )
+    fun reResult(result: ActivityResult){
+        if (result.resultCode== RESULT_OK){
+            val p =result.data!!.getSerializableExtra("itemD") as Product
+            cardTotal.add(p.price)
+            Toast.makeText(this,"Sepetinize ${p.name} ürününü eklediniz", Toast.LENGTH_SHORT).show()
+            totalPrice+= p.price
+            binding.tvBagPrice.text="₺"+ totalPrice
+
+        }
+
+        if (result.resultCode== RESULT_CANCELED){
+            binding.tvBagPrice.text="₺"+ totalPrice
+
+        }
+        setTotalPrice()
+    }
+
+    fun itemClick(position : Int,list:ArrayList<Product>) {
+        setTotalPrice()
+        val intent= Intent(this, ProductDetailActivity::class.java)
+        intent.putExtra("item",list.get(position))
+        intent.putExtra("user_type",userType)
+        intent.putExtra("total",totalPrice)
+        resultLauncher.launch(intent)
+    }
+    fun addClick(position: Int,list: ArrayList<Product>){
+        cardTotal.add(list.get(position).price)
+        setTotalPrice()
+    }
 
 
     fun addingButtons(){
@@ -150,49 +185,6 @@ open class ProductListActivity : AppCompatActivity() {
     }
 
 
-    private fun setTotalPrice( ){
-        totalPrice=0.00f
-        for (i in cardTotal){
-            totalPrice = totalPrice + i
-        }
-        binding.tvBagPrice.text="₺"+ totalPrice
-    }
-
-
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ::reResult )
-
-    fun reResult(result: ActivityResult){
-        if (result.resultCode== RESULT_OK){
-            val p =result.data!!.getSerializableExtra("itemD") as Product
-            cardTotal.add(p.price)
-            Toast.makeText(this,"Sepetinize ${p.name} ürününü eklediniz", Toast.LENGTH_SHORT).show()
-            totalPrice+= p.price
-            binding.tvBagPrice.text="₺"+ totalPrice
-
-        }
-
-        if (result.resultCode== RESULT_CANCELED){
-            binding.tvBagPrice.text="₺"+ totalPrice
-
-        }
-        setTotalPrice()
-        //binding.rvProducts.adapter!!.notifyDataSetChanged()
-    }
-
-    fun itemClick(position : Int,list:ArrayList<Product>)
-    {
-        setTotalPrice()
-        val intent= Intent(this, ProductDetailActivity::class.java)
-        intent.putExtra("item",list.get(position))
-        intent.putExtra("user_type",userType)
-        intent.putExtra("total",totalPrice)
-        resultLauncher.launch(intent)
-    }
-
-    fun addClick(position: Int,list: ArrayList<Product>){
-        cardTotal.add(list.get(position).price)
-        setTotalPrice()
-    }
     //product data
     fun addingProductList(){
 
