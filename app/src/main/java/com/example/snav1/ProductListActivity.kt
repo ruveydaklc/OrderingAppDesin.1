@@ -25,7 +25,7 @@ open class ProductListActivity : AppCompatActivity() {
     var productList=ArrayList<Product>()
 
     lateinit var userType:String
-    var totalPrice:Float = 0.0f
+    var totalPrice:Float = 0.00f
     var selectedFilter:String="all"
 
     var white :Int =0
@@ -146,7 +146,7 @@ open class ProductListActivity : AppCompatActivity() {
 
 
     private fun setTotalPrice( ){
-        totalPrice=0.0f
+        totalPrice=0.00f
         for (i in cardTotal){
             totalPrice = totalPrice + i
         }

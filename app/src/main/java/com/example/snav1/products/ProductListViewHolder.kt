@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snav1.Product
@@ -24,7 +25,8 @@ class ProductListViewHolder(itemView:View,userType:String
     var btnAdd:ImageButton
     var tvName:TextView
     var tvPrice:TextView
-    var cardView:CardView
+    //var cardView:CardView
+    var card:ConstraintLayout
 
 
 
@@ -34,7 +36,8 @@ class ProductListViewHolder(itemView:View,userType:String
         tvName=itemView.findViewById(R.id.tvProductName_C)
         tvPrice=itemView.findViewById(R.id.tvPrice_C)
         btnAdd=itemView.findViewById(R.id.btnAdd_C)
-        cardView=itemView.findViewById(R.id.card_product_design)
+        //cardView=itemView.findViewById(R.id.card_product_design)
+        card=itemView.findViewById(R.id.card_product_design)
 
         itemView.setOnClickListener { itemClick(adapterPosition,pList) }
         btnAdd.setOnClickListener { allClick(adapterPosition,pList) }
