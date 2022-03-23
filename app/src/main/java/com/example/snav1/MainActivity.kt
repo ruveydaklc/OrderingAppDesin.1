@@ -22,13 +22,9 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*val sampPhoneNum:String = "01111111111"
+        val sampPhoneNum:String = "01111111111"
         val sampPassword:String= "#e&it1m"
 
-        */
-
-        val sampPhoneNum:String = "0"
-        val sampPassword:String= "0"
 
         binding.btnLogIn.setOnClickListener {
 
