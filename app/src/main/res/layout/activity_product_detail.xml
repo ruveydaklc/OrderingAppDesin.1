@@ -72,7 +72,7 @@
     <TextView
         android:id="@+id/tvBagPrice_D"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="22dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/box_shape"
         android:backgroundTint="@color/light_green"
@@ -155,7 +155,6 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:background="@android:drawable/dialog_holo_light_frame"
-        android:backgroundTint="@color/white"
         android:elevation="10dp"
         android:minWidth="48dp"
         android:minHeight="48dp"

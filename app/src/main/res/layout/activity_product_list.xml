@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/tvBagPrice"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="22dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/box_shape"
         android:backgroundTint="@color/light_green"
