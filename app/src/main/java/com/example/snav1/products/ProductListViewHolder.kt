@@ -15,7 +15,10 @@ import com.example.snav1.R
 import com.example.snav1.card.cardTotal
 
 
-class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Product>, itemClick : (position : Int,list:ArrayList<Product>)->Unit): RecyclerView.ViewHolder(itemView)
+class ProductListViewHolder(itemView:View,userType:String
+                            ,pList:ArrayList<Product>
+                            , itemClick : (position : Int,list:ArrayList<Product>)->Unit
+                            , allClick:(position:Int,list:ArrayList<Product>)->Unit): RecyclerView.ViewHolder(itemView)
 {
     var ivItemImage:ImageView
     var btnAdd:ImageButton
@@ -34,6 +37,7 @@ class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Produc
         cardView=itemView.findViewById(R.id.card_product_design)
 
         itemView.setOnClickListener { itemClick(adapterPosition,pList) }
+        btnAdd.setOnClickListener { allClick(adapterPosition,pList) }
 
 
     }
@@ -53,11 +57,12 @@ class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Produc
         val image = BitmapFactory.decodeResource(context.resources, item.img!!)
         ivItemImage.setImageBitmap(image)
 
-        btnAdd.setOnClickListener {
+        /*btnAdd.setOnClickListener {
+
             cardTotal.add(item.price)
             Toast.makeText(context,"${tvName.text} ürününü sepetinize eklediniz",Toast.LENGTH_SHORT).show()
         }
-
+*/
         /*cardView.setOnClickListener {
             val intent= Intent(context, ProductDetailActivity::class.java)
             intent.putExtra("item",item)

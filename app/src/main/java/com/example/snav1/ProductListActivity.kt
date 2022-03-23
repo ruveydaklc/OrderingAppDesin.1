@@ -49,6 +49,8 @@ open class ProductListActivity : AppCompatActivity() {
         userType= intent.getStringExtra("user_type").toString()
 
 
+        setTotalPrice()
+
         addingProductList()
         initColors()
         addingButtons()
@@ -77,7 +79,6 @@ open class ProductListActivity : AppCompatActivity() {
         binding.btnWater.setOnClickListener { waterTapp(binding.btnWater) }
 
 
-        setTotalPrice()
 
     }
 
@@ -89,13 +90,13 @@ open class ProductListActivity : AppCompatActivity() {
         for (item in productList){
             if (item.type == category){
                 categoryFilterList.add(item)
-                binding.rvProducts.adapter = ProductsAdapter(this,userType,categoryFilterList,::itemClick)
+                binding.rvProducts.adapter = ProductsAdapter(this,userType,categoryFilterList,::itemClick,::addClick)
             }
         }
     }
     fun showAllData(product_list:ArrayList<Product>){
         setTotalPrice()
-        binding.rvProducts.adapter = ProductsAdapter(this,userType,product_list,::itemClick)
+        binding.rvProducts.adapter = ProductsAdapter(this,userType,product_list,::itemClick,::addClick)
     }
 
     //button clicked
@@ -183,6 +184,10 @@ open class ProductListActivity : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
+    fun addClick(position: Int,list: ArrayList<Product>){
+        cardTotal.add(list.get(position).price)
+        setTotalPrice()
+    }
     //product data
     fun addingProductList(){
 
