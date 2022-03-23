@@ -55,7 +55,6 @@ class ProductListViewHolder(itemView:View,userType:String,pList:ArrayList<Produc
 
         btnAdd.setOnClickListener {
             cardTotal.add(item.price)
-
             Toast.makeText(context,"${tvName.text} ürününü sepetinize eklediniz",Toast.LENGTH_SHORT).show()
         }
 

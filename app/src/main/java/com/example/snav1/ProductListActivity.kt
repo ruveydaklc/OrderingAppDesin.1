@@ -145,10 +145,10 @@ open class ProductListActivity : AppCompatActivity() {
 
 
     private fun setTotalPrice( ){
+        totalPrice=0.0f
         for (i in cardTotal){
             totalPrice = totalPrice + i
         }
-        Toast.makeText(this,"${totalPrice}",Toast.LENGTH_LONG).show()
         binding.tvBagPrice.text="₺"+ totalPrice
     }
 
@@ -159,22 +159,23 @@ open class ProductListActivity : AppCompatActivity() {
         if (result.resultCode== RESULT_OK){
             val p =result.data!!.getSerializableExtra("itemD") as Product
             cardTotal.add(p.price)
-            Toast.makeText(this,"Sepetinize ${p.name} ürününü eklediniz",Toast.LENGTH_SHORT).show()
-            //totalPrice+= p.price
-            //binding.tvBagPrice.text="₺"+ totalPrice
+            Toast.makeText(this,"Sepetinize ${p.name} ürününü eklediniz", Toast.LENGTH_SHORT).show()
+            totalPrice+= p.price
+            binding.tvBagPrice.text="₺"+ totalPrice
 
-            setTotalPrice()
         }
 
         if (result.resultCode== RESULT_CANCELED){
             binding.tvBagPrice.text="₺"+ totalPrice
 
         }
+        setTotalPrice()
         //binding.rvProducts.adapter!!.notifyDataSetChanged()
     }
 
     fun itemClick(position : Int,list:ArrayList<Product>)
     {
+        setTotalPrice()
         val intent= Intent(this, ProductDetailActivity::class.java)
         intent.putExtra("item",list.get(position))
         intent.putExtra("user_type",userType)
