@@ -168,6 +168,7 @@ open class ProductListActivity : AppCompatActivity() {
     fun addClick(position: Int,list: ArrayList<Product>){
         cardTotal.add(list.get(position).price)
         setTotalPrice()
+        Toast.makeText(this,"${list.get(position).name} ürünü sepetinize eklenmiştir.",Toast.LENGTH_SHORT).show()
     }
 
 
