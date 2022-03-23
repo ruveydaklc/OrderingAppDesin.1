@@ -63,9 +63,7 @@ open class ProductListActivity : AppCompatActivity() {
             binding.tvBagPrice.isVisible=false
         }
 
-        val lmProducts = GridLayoutManager(this,4)
-        lmProducts.orientation=LinearLayoutManager.VERTICAL
-        binding.rvProducts.layoutManager=lmProducts
+
 
         //set "water" button first
         filterList(fCategory);unSelectedAllFilterButtons(binding.btnWater)
@@ -89,9 +87,13 @@ open class ProductListActivity : AppCompatActivity() {
         for (item in productList){
             if (item.type == category){
                 categoryFilterList.add(item)
-                binding.rvProducts.adapter = ProductsAdapter(this,userType,categoryFilterList,::itemClick,::addClick)
             }
         }
+        val lmProducts = GridLayoutManager(this,4)
+        lmProducts.orientation=LinearLayoutManager.VERTICAL
+        binding.rvProducts.layoutManager=lmProducts
+        binding.rvProducts.adapter = ProductsAdapter(this,userType,categoryFilterList,::itemClick,::addClick)
+
     }
 
     /*fun showAllData(product_list:ArrayList<Product>){
@@ -155,6 +157,8 @@ open class ProductListActivity : AppCompatActivity() {
             binding.tvBagPrice.text="₺"+ totalPrice
 
         }
+
+        binding.rvProducts.adapter!!.notifyDataSetChanged()
         setTotalPrice()
     }
 
