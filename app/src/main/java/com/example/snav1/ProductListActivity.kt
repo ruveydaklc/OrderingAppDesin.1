@@ -31,6 +31,7 @@ open class ProductListActivity : AppCompatActivity() {
     var white :Int =0
     var lightGreen:Int = 0
     var allButton=ArrayList<Button>()
+    var category:String="water"
 
 
 
@@ -68,7 +69,10 @@ open class ProductListActivity : AppCompatActivity() {
         val lmProducts = GridLayoutManager(this,2)
         lmProducts.orientation=LinearLayoutManager.VERTICAL
         binding.rvProducts.layoutManager=lmProducts
-        showAllData(productList)
+
+        //set water button first
+        filterList("water");unSelectedAllFilterButtons(binding.btnWater)
+        //showAllData(productList)
 
 
         binding.btnAyran.setOnClickListener { ayranTapp(binding.btnAyran) }
@@ -85,6 +89,7 @@ open class ProductListActivity : AppCompatActivity() {
     //category filter
     private fun filterList(category:String){
 
+        setTotalPrice()
         selectedFilter=category
         var categoryFilterList=ArrayList<Product>()
         for (item in productList){
@@ -94,10 +99,10 @@ open class ProductListActivity : AppCompatActivity() {
             }
         }
     }
-    fun showAllData(product_list:ArrayList<Product>){
+    /*fun showAllData(product_list:ArrayList<Product>){
         setTotalPrice()
         binding.rvProducts.adapter = ProductsAdapter(this,userType,product_list,::itemClick,::addClick)
-    }
+    }*/
 
     //button clicked
     private fun categorySelected(parsedButton:Button){
